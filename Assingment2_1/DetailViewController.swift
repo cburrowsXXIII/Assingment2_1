@@ -8,9 +8,18 @@
 
 import UIKit
 
+protocol DetailViewControllerDelegate: class {
+    func backPressed()
+    func cancelPressed()
+    
+}
+
 class DetailViewController: UIViewController, UITextFieldDelegate{
     var copyOfOriginalItem: Place?
     var detail: Place?
+    var cancel = false
+    
+    weak var delegate: DetailViewControllerDelegate?
     
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
@@ -19,9 +28,10 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var longField: UITextField!
     
     
+    
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = detailItem {
+        if let detail = detail {
             if let name = nameField {
                 name.text = detail.name
             }
@@ -72,6 +82,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
     
     override func viewWillDisappear(_ animated: Bool) {
         saveInModel()
+//        print(nameField?.text ?? "AAAAAHHHHHHH")
+//        print(detail?.name ?? "Uh oh spaghetti-o")
+        delegate?.backPressed()
         
     }
     
@@ -95,15 +108,51 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         return true
     }
     
-    var detailItem: Place? {
-        didSet {
-            // Update the view.
-            configureView()
-        }
+//    var detailItem: Place? {
+//        didSet {
+//            // Update the view.
+//            configureView()
+//        }
+//    }
+    
+    func backPressed() {
+        guard let d = delegate else { return }
+        d.backPressed()
+    }
+    
+    @IBAction func cancelPressed(_ sender: Any) {
+        guard let copy = copyOfOriginalItem else { return }
+        detail?.name = copy.name
+        detail?.address = copy.address
+        detail?.latitude = copy.latitude
+        detail?.longitude = copy.longitude
+        cancel = true
+        configureView()
+        guard let d = delegate else { return }
+        d.cancelPressed()
     }
     
     func saveInModel() {
-        detail?.name = nameField.text ?? ""
+        if let nameSave = nameField {
+            detail?.name = nameSave.text ?? "Fail"
+        }
+        if let addSave = addressField {
+            detail?.address = addSave.text ?? "Fail"
+        }
+        if let latSave = latField?.text {
+            if let numLat = Double(latSave) {
+                detail?.latitude = numLat
+            }
+            
+        }
+        if let longSave = longField?.text {
+            if let numLong = Double(longSave) {
+                detail?.longitude = numLong
+            }
+            
+        }
+        
+        
         
         
         

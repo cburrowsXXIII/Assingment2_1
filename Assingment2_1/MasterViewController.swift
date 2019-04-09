@@ -8,10 +8,11 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class MasterViewController: UITableViewController, DetailViewControllerDelegate {
 
     var detailViewController: DetailViewController? = nil
     var objects = [Place]()
+    var newItem = false
     
     
     override func viewDidLoad() {
@@ -24,21 +25,38 @@ class MasterViewController: UITableViewController {
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }
+        }        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
+        tableView.reloadData()
+        newItem = false
     }
     
     @objc
     func insertNewObject(_ sender: Any) {
+        newItem = true
         let n = objects.count
         objects.append(Place(name: "", address: "", latitude: 0.0, longitude: 0.0))
         let indexPath = IndexPath(row: n, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
         performSegue(withIdentifier: "showDetail", sender: indexPath)
+    }
+    
+    func backPressed() {
+        tableView.reloadData()
+        
+    }
+    
+    func cancelPressed() {
+        if newItem {
+            objects.removeLast()
+        }
+        newItem = false
+        //navigationController?.popViewController(animated: true)
+        tableView.reloadData()
     }
     
     // MARK: - Segues
@@ -54,7 +72,7 @@ class MasterViewController: UITableViewController {
             } else { return }
             let object = objects[indexPath.row]
             let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-            controller.detailItem = object
+            controller.detail = object
             controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
             controller.navigationItem.leftItemsSupplementBackButton = true
             
@@ -75,7 +93,7 @@ class MasterViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         let object = objects[indexPath.row]
-        cell.textLabel!.text = object.name
+        cell.textLabel?.text = object.name
         return cell
     }
     
