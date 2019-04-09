@@ -15,6 +15,7 @@
 		83057495225C4693005E0DBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83057493225C4693005E0DBF /* LaunchScreen.storyboard */; };
 		830574A0225C4694005E0DBF /* Assingment2_1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305749F225C4694005E0DBF /* Assingment2_1Tests.swift */; };
 		830574AB225C4694005E0DBF /* Assingment2_1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830574AA225C4694005E0DBF /* Assingment2_1UITests.swift */; };
+		830574B9225C4BDF005E0DBF /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830574B8225C4BDF005E0DBF /* Place.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		830574A6225C4694005E0DBF /* Assingment2_1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Assingment2_1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		830574AA225C4694005E0DBF /* Assingment2_1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assingment2_1UITests.swift; sourceTree = "<group>"; };
 		830574AC225C4694005E0DBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		830574B8225C4BDF005E0DBF /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				83057491225C4693005E0DBF /* Assets.xcassets */,
 				83057493225C4693005E0DBF /* LaunchScreen.storyboard */,
 				83057496225C4693005E0DBF /* Info.plist */,
+				830574B8225C4BDF005E0DBF /* Place.swift */,
 			);
 			path = Assingment2_1;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				8305748D225C4692005E0DBF /* DetailViewController.swift in Sources */,
 				8305748B225C4692005E0DBF /* MasterViewController.swift in Sources */,
 				83057489225C4692005E0DBF /* AppDelegate.swift in Sources */,
+				830574B9225C4BDF005E0DBF /* Place.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
