@@ -19,13 +19,16 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
+        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }        
+        }
+        
+        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,10 +42,16 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
     func insertNewObject(_ sender: Any) {
         newItem = true
         let n = objects.count
-        objects.append(Place(name: "", address: "", latitude: 0.0, longitude: 0.0))
+        objects.append(Place(name: "Untitled", address: "", latitude: -100.0, longitude: 0.0))
         let indexPath = IndexPath(row: n, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
         performSegue(withIdentifier: "showDetail", sender: indexPath)
+    }
+    
+    @objc
+    func loadList(){
+        //load data here
+        self.tableView.reloadData()
     }
     
     func backPressed() {

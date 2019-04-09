@@ -17,6 +17,7 @@ protocol DetailViewControllerDelegate: class {
 class DetailViewController: UIViewController, UITextFieldDelegate{
     var copyOfOriginalItem: Place?
     var detail: Place?
+    var new: Place?
     var cancel = false
     
     weak var delegate: DetailViewControllerDelegate?
@@ -33,13 +34,15 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         // Update the user interface for the detail item.
         if let detail = detail {
             if let name = nameField {
-                name.text = detail.name
+                if detail.name != "Untitled"{
+                    name.text = detail.name
+                }
             }
             if let address = addressField {
                 address.text = detail.address
             }
             if let lat = latField {
-                if detail.latitude > 0.0{
+                if detail.latitude > -100.0{
                     lat.text = String(detail.latitude)
                 } else {
                     lat.text = ""
@@ -82,9 +85,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
     
     override func viewWillDisappear(_ animated: Bool) {
         saveInModel()
-//        print(nameField?.text ?? "AAAAAHHHHHHH")
-//        print(detail?.name ?? "Uh oh spaghetti-o")
-        delegate?.backPressed()
         
     }
     
@@ -105,18 +105,22 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
     
     func textFieldShouldReturn(_ nameField: UITextField) -> Bool {
         nameField.resignFirstResponder()
+        saveInModel()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+        delegate?.backPressed()
         return true
     }
     
-//    var detailItem: Place? {
-//        didSet {
-//            // Update the view.
-//            configureView()
-//        }
-//    }
+    //var detail: Place? {
+       // didSet {
+            // Update the view.
+            //configureView()
+        //}
+    //}
     
     func backPressed() {
         guard let d = delegate else { return }
+        
         d.backPressed()
     }
     
@@ -133,30 +137,31 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
     }
     
     func saveInModel() {
-        if let nameSave = nameField {
-            detail?.name = nameSave.text ?? "Fail"
-        }
-        if let addSave = addressField {
-            detail?.address = addSave.text ?? "Fail"
-        }
-        if let latSave = latField?.text {
-            if let numLat = Double(latSave) {
-                detail?.latitude = numLat
+        if let detail = detail {
+            if let nameSave = nameField {
+                detail.name = nameSave.text ?? "Fail"
             }
+            if let addSave = addressField {
+                detail.address = addSave.text ?? "Fail"
+            }
+            if let latSave = latField?.text {
+                if let numLat = Double(latSave) {
+                    detail.latitude = numLat
+                }
+                
+            }
+            if let longSave = longField?.text {
+                if let numLong = Double(longSave) {
+                    detail.longitude = numLong
+                }
+            }
+        } else {
             
         }
-        if let longSave = longField?.text {
-            if let numLong = Double(longSave) {
-                detail?.longitude = numLong
-            }
-            
-        }
-        
-        
-        
-        
         
     }
+    
+    
     
 
 
