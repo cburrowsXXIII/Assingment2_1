@@ -31,6 +31,8 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
         tableView.reloadData()
     }
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
@@ -42,7 +44,7 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
     func insertNewObject(_ sender: Any) {
         newItem = true
         let n = objects.count
-        objects.append(Place(name: "Untitled", address: "", latitude: -100.0, longitude: 0.0))
+        objects.append(Place(name: "New Place", address: "", latitude: -100.0, longitude: 0.0))
         let indexPath = IndexPath(row: n, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
         performSegue(withIdentifier: "showDetail", sender: indexPath)
@@ -57,13 +59,12 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
         tableView.reloadData()
         
     }
-    
+    //Function used later
     func cancelPressed() {
         if newItem {
             objects.removeLast()
         }
         newItem = false
-        //navigationController?.popViewController(animated: true)
         tableView.reloadData()
     }
     

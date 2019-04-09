@@ -101,14 +101,11 @@
 		83057487225C4692005E0DBF /* Assingment2_1 */ = {
 			isa = PBXGroup;
 			children = (
-				83057488225C4692005E0DBF /* AppDelegate.swift */,
-				8305748A225C4692005E0DBF /* MasterViewController.swift */,
-				8305748C225C4692005E0DBF /* DetailViewController.swift */,
-				8305748E225C4692005E0DBF /* Main.storyboard */,
+				830574F8225C9AE1005E0DBF /* View */,
+				830574F7225C9AC8005E0DBF /* Controller */,
+				830574F6225C9ABB005E0DBF /* Model */,
 				83057491225C4693005E0DBF /* Assets.xcassets */,
-				83057493225C4693005E0DBF /* LaunchScreen.storyboard */,
 				83057496225C4693005E0DBF /* Info.plist */,
-				830574B8225C4BDF005E0DBF /* Place.swift */,
 			);
 			path = Assingment2_1;
 			sourceTree = "<group>";
@@ -129,6 +126,33 @@
 				830574AC225C4694005E0DBF /* Info.plist */,
 			);
 			path = Assingment2_1UITests;
+			sourceTree = "<group>";
+		};
+		830574F6225C9ABB005E0DBF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				830574B8225C4BDF005E0DBF /* Place.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		830574F7225C9AC8005E0DBF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				83057488225C4692005E0DBF /* AppDelegate.swift */,
+				8305748A225C4692005E0DBF /* MasterViewController.swift */,
+				8305748C225C4692005E0DBF /* DetailViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		830574F8225C9AE1005E0DBF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				83057493225C4693005E0DBF /* LaunchScreen.storyboard */,
+				8305748E225C4692005E0DBF /* Main.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

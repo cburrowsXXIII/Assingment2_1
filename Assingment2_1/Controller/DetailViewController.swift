@@ -34,7 +34,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         // Update the user interface for the detail item.
         if let detail = detail {
             if let name = nameField {
-                if detail.name != "Untitled"{
+                if detail.name != "New Place"{
                     name.text = detail.name
                 }
             }
@@ -88,6 +88,14 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         
     }
     
+    private func textFieldDidBeginEditing(_ textField: UITextField) -> Bool {
+        
+        if textField == longField {
+            return true
+        }
+        return false
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -95,7 +103,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
     @objc func keyboardWillChange(notification: Notification) {
         if UIDevice.current.orientation.isLandscape {
             if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillShowNotification {
-                view.frame.origin.y = -20
+                view.frame.origin.y = -18
             } else {
                 view.frame.origin.y = 0
             }
@@ -118,23 +126,23 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         //}
     //}
     
-    func backPressed() {
-        guard let d = delegate else { return }
-        
-        d.backPressed()
-    }
-    
-    @IBAction func cancelPressed(_ sender: Any) {
-        guard let copy = copyOfOriginalItem else { return }
-        detail?.name = copy.name
-        detail?.address = copy.address
-        detail?.latitude = copy.latitude
-        detail?.longitude = copy.longitude
-        cancel = true
-        configureView()
-        guard let d = delegate else { return }
-        d.cancelPressed()
-    }
+//    func backPressed() {
+//        guard let d = delegate else { return }
+//
+//        d.backPressed()
+//    }
+    //Cancel function to be integrated later
+//    @IBAction func cancelPressed(_ sender: Any) {
+//        guard let copy = copyOfOriginalItem else { return }
+//        detail?.name = copy.name
+//        detail?.address = copy.address
+//        detail?.latitude = copy.latitude
+//        detail?.longitude = copy.longitude
+//        cancel = true
+//        configureView()
+//        guard let d = delegate else { return }
+//        d.cancelPressed()
+//    }
     
     func saveInModel() {
         if let detail = detail {
@@ -148,15 +156,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
                 if let numLat = Double(latSave) {
                     detail.latitude = numLat
                 }
-                
             }
             if let longSave = longField?.text {
                 if let numLong = Double(longSave) {
                     detail.longitude = numLong
                 }
             }
-        } else {
-            
         }
         
     }

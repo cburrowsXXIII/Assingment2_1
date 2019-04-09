@@ -52,20 +52,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EUc-zf-xci">
+                                <rect key="frame" x="38" y="124" width="68" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter latitude" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="THE-wr-STl">
-                                <rect key="frame" x="114" y="169" width="236" height="30"/>
+                                <rect key="frame" x="114" y="158" width="236" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter longitude" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4S7-Ii-dUW">
-                                <rect key="frame" x="114" y="207" width="236" height="30"/>
+                                <rect key="frame" x="114" y="196" width="236" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DMC-MD-Djz">
-                                <rect key="frame" x="38" y="174" width="68" height="21"/>
+                                <rect key="frame" x="38" y="163" width="68" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="9yr-Qb-90x"/>
                                 </constraints>
@@ -74,13 +80,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longitude:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CX8-bu-OhD">
-                                <rect key="frame" x="24" y="212" width="82" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EUc-zf-xci">
-                                <rect key="frame" x="38" y="124" width="68" height="21"/>
+                                <rect key="frame" x="24" y="199" width="82" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -92,14 +92,14 @@
                             <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="FQD-Jk-Gtv" secondAttribute="trailing" constant="26" id="4Jf-cX-hxA"/>
                             <constraint firstItem="FQD-Jk-Gtv" firstAttribute="leading" secondItem="EUc-zf-xci" secondAttribute="trailing" constant="7" id="8LZ-G3-1Yk"/>
                             <constraint firstItem="d1B-eV-kms" firstAttribute="leading" secondItem="Dv1-zs-XyY" secondAttribute="trailing" constant="8" id="A2M-YL-jnE"/>
-                            <constraint firstItem="CX8-bu-OhD" firstAttribute="top" secondItem="DMC-MD-Djz" secondAttribute="bottom" constant="17" id="ABK-VP-aMB"/>
                             <constraint firstItem="THE-wr-STl" firstAttribute="leading" secondItem="DMC-MD-Djz" secondAttribute="trailing" constant="8" id="AOc-c8-DF4"/>
+                            <constraint firstItem="CX8-bu-OhD" firstAttribute="top" secondItem="DMC-MD-Djz" secondAttribute="bottom" constant="15" id="DCf-vF-dTm"/>
                             <constraint firstItem="DMC-MD-Djz" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="38" id="Ecr-qh-tex"/>
                             <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="4S7-Ii-dUW" secondAttribute="trailing" constant="25" id="IRk-8h-4MN"/>
                             <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="THE-wr-STl" secondAttribute="trailing" constant="25" id="Kje-Yi-HLa"/>
-                            <constraint firstItem="DMC-MD-Djz" firstAttribute="top" secondItem="EUc-zf-xci" secondAttribute="bottom" constant="29" id="LGF-tI-8Tz"/>
                             <constraint firstItem="EUc-zf-xci" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="38" id="MaT-VP-Xg0"/>
                             <constraint firstItem="4S7-Ii-dUW" firstAttribute="leading" secondItem="CX8-bu-OhD" secondAttribute="trailing" constant="8" id="O1w-gb-aG2"/>
+                            <constraint firstItem="THE-wr-STl" firstAttribute="top" secondItem="FQD-Jk-Gtv" secondAttribute="bottom" constant="8" id="UH5-aQ-SpS"/>
                             <constraint firstItem="4S7-Ii-dUW" firstAttribute="top" secondItem="THE-wr-STl" secondAttribute="bottom" constant="8" id="aa9-MI-aLs"/>
                             <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" secondItem="d1B-eV-kms" secondAttribute="trailing" constant="26" id="bta-c1-xxC"/>
                             <constraint firstItem="FQD-Jk-Gtv" firstAttribute="top" secondItem="d1B-eV-kms" secondAttribute="bottom" constant="8" id="csA-uj-oCg"/>
@@ -107,12 +107,12 @@
                             <constraint firstItem="EUc-zf-xci" firstAttribute="top" secondItem="Dv1-zs-XyY" secondAttribute="bottom" constant="17" id="iPM-WD-n4l"/>
                             <constraint firstItem="CX8-bu-OhD" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="24" id="n9C-73-qfv"/>
                             <constraint firstItem="Dv1-zs-XyY" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="50" id="ntc-wg-F5P"/>
-                            <constraint firstItem="THE-wr-STl" firstAttribute="top" secondItem="FQD-Jk-Gtv" secondAttribute="bottom" constant="19" id="siJ-XL-rOt"/>
+                            <constraint firstItem="DMC-MD-Djz" firstAttribute="top" secondItem="EUc-zf-xci" secondAttribute="bottom" constant="18" id="vsD-Il-BKf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="VUw-jc-0yf"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
+                    <navigationItem key="navigationItem" title="Place Details" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="addressField" destination="FQD-Jk-Gtv" id="jLI-5K-COr"/>
                         <outlet property="latField" destination="THE-wr-STl" id="m7S-7z-NRk"/>
@@ -175,7 +175,7 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8"/>
+                    <navigationItem key="navigationItem" title="Places" id="Zdf-7t-Un8"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
@@ -199,6 +199,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tll-UG-LXB"/>
+        <segue reference="6S0-TO-JiA"/>
     </inferredMetricsTieBreakers>
 </document>
