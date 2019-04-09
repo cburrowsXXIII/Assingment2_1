@@ -50,7 +50,6 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
     
     @objc
     func loadList(){
-        //load data here
         self.tableView.reloadData()
     }
     

@@ -19,9 +19,16 @@ class Assingment2_1Tests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testPlace() {
+        let name = "Sydney CBD"
+        let address = "Sydney"
+        let latitude = -23.04
+        let longitude = 153.02
+        let place = Place(name: name, address: address, latitude: latitude, longitude: longitude)
+        XCTAssertEqual(place.name, name)
+        XCTAssertEqual(place.address, address)
+        XCTAssertEqual(place.latitude, latitude)
+        XCTAssertEqual(place.longitude, longitude)
     }
 
     func testPerformanceExample() {
