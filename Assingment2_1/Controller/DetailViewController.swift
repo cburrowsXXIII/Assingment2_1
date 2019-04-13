@@ -8,16 +8,15 @@
 
 import UIKit
 
-protocol DetailViewControllerDelegate: class {
-    func backPressed()
-    func cancelPressed()
-    
+protocol DetailViewControllerDelegate: AnyObject {
+    func didDismissDetail(sender:DetailViewController)
 }
+
 
 class DetailViewController: UIViewController, UITextFieldDelegate{
     var copyOfOriginalItem: Place?
     var detail: Place?
-    var new: Place?
+    var newItem = false
     var cancel = false
     
     weak var delegate: DetailViewControllerDelegate?
@@ -36,6 +35,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
             if let name = nameField {
                 if detail.name != "New Place"{
                     name.text = detail.name
+                } else {
+                    newItem = true
                 }
             }
             if let address = addressField {
@@ -58,7 +59,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
             guard copyOfOriginalItem == nil else {
                 return
             }
-            copyOfOriginalItem = Place(name: detail.name, address: detail.name, latitude: detail.latitude, longitude: detail.longitude)
+            copyOfOriginalItem = Place(name: detail.name, address: detail.address, latitude: detail.latitude, longitude: detail.longitude)
         }
     }
     
@@ -115,34 +116,27 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         nameField.resignFirstResponder()
         saveInModel()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-        delegate?.backPressed()
+        //delegate?.backPressed()
         return true
     }
     
-    //var detail: Place? {
-       // didSet {
-            // Update the view.
-            //configureView()
-        //}
-    //}
     
-//    func backPressed() {
-//        guard let d = delegate else { return }
-//
-//        d.backPressed()
-//    }
-    //Cancel function to be integrated later
-//    @IBAction func cancelPressed(_ sender: Any) {
-//        guard let copy = copyOfOriginalItem else { return }
-//        detail?.name = copy.name
-//        detail?.address = copy.address
-//        detail?.latitude = copy.latitude
-//        detail?.longitude = copy.longitude
-//        cancel = true
-//        configureView()
-//        guard let d = delegate else { return }
-//        d.cancelPressed()
-//    }
+    @IBAction func cancelPressed(_ sender: UIButton) {
+        guard let copy = copyOfOriginalItem else { return }
+        if newItem{
+            print(Storage.shared.objects)
+            Storage.shared.objects.removeLast()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+        } else{
+            detail?.name = copy.name
+            detail?.address = copy.address
+            detail?.latitude = copy.latitude
+            detail?.longitude = copy.longitude
+            configureView()
+        }
+        delegate?.didDismissDetail(sender: self)
+               
+    }
     
     func saveInModel() {
         if let detail = detail {

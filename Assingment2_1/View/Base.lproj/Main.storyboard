@@ -112,7 +112,13 @@
                         <viewLayoutGuide key="safeArea" id="VUw-jc-0yf"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Place Details" id="mOI-FS-AaM"/>
+                    <navigationItem key="navigationItem" title="Place Details" id="mOI-FS-AaM">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="1RE-Bm-Zzo">
+                            <connections>
+                                <action selector="cancelPressed:" destination="JEX-9P-axG" id="eEz-aR-rYj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="addressField" destination="FQD-Jk-Gtv" id="jLI-5K-COr"/>
                         <outlet property="latField" destination="THE-wr-STl" id="m7S-7z-NRk"/>

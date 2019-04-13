@@ -11,7 +11,7 @@ import UIKit
 class MasterViewController: UITableViewController, DetailViewControllerDelegate {
 
     var detailViewController: DetailViewController? = nil
-    var objects = [Place]()
+    //var objects = Storage.shared.objects
     var newItem = false
     
     
@@ -23,11 +23,11 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
-        if let split = splitViewController {
+        if let split = self.splitViewController {
             let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
-        
+        self.detailViewController?.delegate = self
         tableView.reloadData()
     }
     
@@ -43,8 +43,10 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
     @objc
     func insertNewObject(_ sender: Any) {
         newItem = true
-        let n = objects.count
-        objects.append(Place(name: "New Place", address: "", latitude: -100.0, longitude: 0.0))
+        let n = Storage.shared.objects.count
+        Storage.shared.objects.append(Place(name: "New Place", address: "", latitude: -100.0, longitude: 0.0))
+        //print(objects)
+        print(Storage.shared.objects)
         let indexPath = IndexPath(row: n, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
         performSegue(withIdentifier: "showDetail", sender: indexPath)
@@ -55,17 +57,8 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
         self.tableView.reloadData()
     }
     
-    func backPressed() {
-        tableView.reloadData()
-        
-    }
-    //Function used later
-    func cancelPressed() {
-        if newItem {
-            objects.removeLast()
-        }
-        newItem = false
-        tableView.reloadData()
+    func didDismissDetail(sender: DetailViewController) {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Segues
@@ -79,7 +72,7 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
                 let i = tableView.indexPath(for: cell) {
                 indexPath = i
             } else { return }
-            let object = objects[indexPath.row]
+            let object = Storage.shared.objects[indexPath.row]
             let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
             controller.detail = object
             controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
@@ -95,13 +88,13 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objects.count
+        return Storage.shared.objects.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        let object = objects[indexPath.row]
+        let object = Storage.shared.objects[indexPath.row]
         cell.textLabel?.text = object.name
         return cell
     }
@@ -113,7 +106,7 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            objects.remove(at: indexPath.row)
+            Storage.shared.objects.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
