@@ -8,11 +8,11 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController, DetailViewControllerDelegate {
+class MasterViewController: UITableViewController {
 
-    var detailViewController: DetailViewController? = nil
+
+    var detailViewController: DetailViewController?
     var objects = [Place]()
-    var newItem = false
     
     
     override func viewDidLoad() {
@@ -20,6 +20,9 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelPressed), name: NSNotification.Name(rawValue: "cancel"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelNewPressed), name: NSNotification.Name(rawValue: "cancelNew"), object: nil)
+        
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
@@ -28,7 +31,6 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         
-        tableView.reloadData()
     }
     
     
@@ -37,12 +39,10 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
         tableView.reloadData()
-        newItem = false
     }
     
     @objc
     func insertNewObject(_ sender: Any) {
-        newItem = true
         let n = objects.count
         objects.append(Place(name: "New Place", address: "", latitude: -100.0, longitude: 0.0))
         let indexPath = IndexPath(row: n, section: 0)
@@ -59,13 +59,18 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
         tableView.reloadData()
         
     }
-    //Function used later
-    func cancelPressed() {
-        if newItem {
-            objects.removeLast()
-        }
-        newItem = false
+    @objc
+    func cancelNewPressed() {
+        objects.removeLast()
         tableView.reloadData()
+        navigationController?.popViewController(animated: true)
+        print("CancelNew")
+    }
+    @objc
+    func cancelPressed() {
+        tableView.reloadData()
+        navigationController?.popViewController(animated: true)
+        print("Cancel")
     }
     
     // MARK: - Segues
@@ -123,5 +128,8 @@ class MasterViewController: UITableViewController, DetailViewControllerDelegate 
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
     }
+    
+
+    
 }
 

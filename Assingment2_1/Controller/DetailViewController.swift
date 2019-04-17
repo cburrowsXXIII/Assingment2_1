@@ -7,20 +7,15 @@
 //
 
 import UIKit
-
-protocol DetailViewControllerDelegate: class {
-    func backPressed()
-    func cancelPressed()
-    
-}
+import CoreLocation
 
 class DetailViewController: UIViewController, UITextFieldDelegate{
     var copyOfOriginalItem: Place?
     var detail: Place?
     var new: Place?
+    var newItem = false
     var cancel = false
     
-    weak var delegate: DetailViewControllerDelegate?
     
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
@@ -36,6 +31,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
             if let name = nameField {
                 if detail.name != "New Place"{
                     name.text = detail.name
+                } else {
+                    newItem = true
                 }
             }
             if let address = addressField {
@@ -58,7 +55,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
             guard copyOfOriginalItem == nil else {
                 return
             }
-            copyOfOriginalItem = Place(name: detail.name, address: detail.name, latitude: detail.latitude, longitude: detail.longitude)
+            copyOfOriginalItem = Place(name: detail.name, address: detail.address, latitude: detail.latitude, longitude: detail.longitude)
         }
     }
     
@@ -83,19 +80,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        saveInModel()
-        
-    }
-    
-    private func textFieldDidBeginEditing(_ textField: UITextField) -> Bool {
-        
-        if textField == longField {
-            return true
-        }
-        return false
-    }
-    
+   
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -113,36 +98,30 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
     
     func textFieldShouldReturn(_ nameField: UITextField) -> Bool {
         nameField.resignFirstResponder()
-        saveInModel()
+        forwardGeo()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-        delegate?.backPressed()
         return true
     }
     
-    //var detail: Place? {
-       // didSet {
-            // Update the view.
-            //configureView()
-        //}
-    //}
-    
-//    func backPressed() {
-//        guard let d = delegate else { return }
-//
-//        d.backPressed()
-//    }
-    //Cancel function to be integrated later
-//    @IBAction func cancelPressed(_ sender: Any) {
-//        guard let copy = copyOfOriginalItem else { return }
-//        detail?.name = copy.name
-//        detail?.address = copy.address
-//        detail?.latitude = copy.latitude
-//        detail?.longitude = copy.longitude
-//        cancel = true
-//        configureView()
-//        guard let d = delegate else { return }
-//        d.cancelPressed()
-//    }
+
+    @IBAction func cancelButtonPressed(_ sender: Any) {
+        guard let copy = copyOfOriginalItem else { return }
+        detail?.name = copy.name
+        detail?.address = copy.address
+        detail?.latitude = copy.latitude
+        detail?.longitude = copy.longitude
+        if newItem {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "cancelNew"), object: nil)
+            newItem = false
+        } else {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "cancel"), object: nil)
+        }
+        cancel = true
+        configureView()
+        
+        
+
+    }
     
     func saveInModel() {
         if let detail = detail {
@@ -158,17 +137,39 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
                 }
             }
             if let longSave = longField?.text {
+                print("This :\(longSave)")
                 if let numLong = Double(longSave) {
                     detail.longitude = numLong
                 }
             }
         }
+        newItem = false
         
     }
     
-    
-    
-
-
+    func forwardGeo() {
+        let geo = CLGeocoder()
+        let address = addressField.text ?? ""
+        var latitude = ""
+        var longitude = ""
+        geo.geocodeAddressString(address) {
+            guard let placeMarks = $0 else {
+                print("Got error: \(String(describing: $1))")
+                return
+            }
+            print("Got \($0?.count ?? 0) elements:")
+            for placeMark in placeMarks {
+                guard let location = placeMark.location else {
+                    continue
+                }
+                latitude = "\(location.coordinate.latitude)"
+                longitude = "\(location.coordinate.longitude)"
+                print(latitude, longitude)
+                self.latField.text = latitude
+                self.longField.text = longitude
+                self.saveInModel()
+            }
+        }
+    }
 }
 
