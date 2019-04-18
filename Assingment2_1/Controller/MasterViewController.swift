@@ -13,6 +13,7 @@ class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController?
     var objects = [Place]()
+    var start = true
     
     
     override func viewDidLoad() {
@@ -22,6 +23,8 @@ class MasterViewController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cancelPressed), name: NSNotification.Name(rawValue: "cancel"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cancelNewPressed), name: NSNotification.Name(rawValue: "cancelNew"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(storage), name: NSNotification.Name(rawValue: "store"), object: nil)
+        getStorage()
         
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
@@ -39,6 +42,10 @@ class MasterViewController: UITableViewController {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
         tableView.reloadData()
+    }
+    
+    func initialiseArray() {
+        
     }
     
     @objc
@@ -120,6 +127,7 @@ class MasterViewController: UITableViewController {
         if editingStyle == .delete {
             objects.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            storage()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
@@ -127,6 +135,39 @@ class MasterViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
+    }
+    @objc
+    func storage(){
+        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let encoder = JSONEncoder()
+        do {
+            let json = try encoder.encode(objects)
+            let fileURL = docs.appendingPathComponent("json")
+            print(fileURL)
+            try json.write(to: fileURL, options: .atomic)
+        } catch {
+            print("Error: \(error)")
+        }
+    }
+    
+    func getStorage(){
+        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let decoder = JSONDecoder()
+        do {
+            let fileURL = docs.appendingPathComponent("json")
+            let data = try Data(contentsOf: fileURL)
+            let places = try decoder.decode([Place].self, from: data)
+            print ("Got \(places.count)")
+            objects = []
+            print("emptied")
+            for place in places {
+                print (place.name)
+                objects.append(place)
+            
+            }
+        } catch {
+            print("Error: \(error)")
+        }
     }
     
 

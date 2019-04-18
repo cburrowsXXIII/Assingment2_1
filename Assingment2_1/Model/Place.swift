@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Place {
+class Place: Codable {
     var name: String
     var address: String
     var latitude: Double

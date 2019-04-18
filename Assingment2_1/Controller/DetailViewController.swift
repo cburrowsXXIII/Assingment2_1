@@ -168,8 +168,11 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
                 self.latField.text = latitude
                 self.longField.text = longitude
                 self.saveInModel()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "store"), object: nil)
             }
         }
     }
+    
+
 }
 
