@@ -16,7 +16,6 @@
 		830574A0225C4694005E0DBF /* Assingment2_1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305749F225C4694005E0DBF /* Assingment2_1Tests.swift */; };
 		830574AB225C4694005E0DBF /* Assingment2_1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830574AA225C4694005E0DBF /* Assingment2_1UITests.swift */; };
 		830574B9225C4BDF005E0DBF /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830574B8225C4BDF005E0DBF /* Place.swift */; };
-		83E796BB2266F32D00C4B158 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E796BA2266F32D00C4B158 /* Storage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +51,6 @@
 		830574AA225C4694005E0DBF /* Assingment2_1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assingment2_1UITests.swift; sourceTree = "<group>"; };
 		830574AC225C4694005E0DBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		830574B8225C4BDF005E0DBF /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
-		83E796BA2266F32D00C4B158 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				830574B8225C4BDF005E0DBF /* Place.swift */,
-				83E796BA2266F32D00C4B158 /* Storage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -293,7 +290,6 @@
 				8305748B225C4692005E0DBF /* MasterViewController.swift in Sources */,
 				83057489225C4692005E0DBF /* AppDelegate.swift in Sources */,
 				830574B9225C4BDF005E0DBF /* Place.swift in Sources */,
-				83E796BB2266F32D00C4B158 /* Storage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

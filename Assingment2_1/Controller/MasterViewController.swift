@@ -12,6 +12,7 @@ class MasterViewController: UITableViewController {
 
 
     var detailViewController: DetailViewController?
+    ///Array of Place objects
     var objects = [Place]()
     var start = true
     
@@ -37,17 +38,14 @@ class MasterViewController: UITableViewController {
     }
     
     
-    
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
+
     
-    func initialiseArray() {
-        
-    }
-    
+    ///Function creates a new item when the add button is clicked.
     @objc
     func insertNewObject(_ sender: Any) {
         let n = objects.count
@@ -57,15 +55,18 @@ class MasterViewController: UITableViewController {
         performSegue(withIdentifier: "showDetail", sender: indexPath)
     }
     
+    ///Reloads the table if called on from the notification centre.
     @objc
     func loadList(){
         self.tableView.reloadData()
     }
     
+    ///Reloads table if back was pressed
     func backPressed() {
         tableView.reloadData()
         
     }
+    ///Removes the last item and reloads the table if there is a new item.
     @objc
     func cancelNewPressed() {
         objects.removeLast()
@@ -73,6 +74,7 @@ class MasterViewController: UITableViewController {
         navigationController?.popViewController(animated: true)
         print("CancelNew")
     }
+    ///Reloads the table if there is no new item.
     @objc
     func cancelPressed() {
         tableView.reloadData()
@@ -136,6 +138,7 @@ class MasterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
     }
+    ///Function that encodes the objects array into a storage json file.
     @objc
     func storage(){
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -149,7 +152,7 @@ class MasterViewController: UITableViewController {
             print("Error: \(error)")
         }
     }
-    
+    ///Function that retrieves places from storage and appends them into the now cleared objects array
     func getStorage(){
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let decoder = JSONDecoder()

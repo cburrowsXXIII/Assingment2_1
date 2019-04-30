@@ -24,7 +24,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var longField: UITextField!
     
     
-    
+    ///Function configures the view when called upon.
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = detail {
@@ -85,6 +85,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         self.view.endEditing(true)
     }
     
+    ///Function controls the adjustment of the view when the keyboard would cover an input.
     @objc func keyboardWillChange(notification: Notification) {
         if UIDevice.current.orientation.isLandscape {
             if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillShowNotification {
@@ -103,7 +104,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         return true
     }
     
-
+    ///Action function that cancels an item editing.
     @IBAction func cancelButtonPressed(_ sender: Any) {
         guard let copy = copyOfOriginalItem else { return }
         detail?.name = copy.name
@@ -122,7 +123,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         
 
     }
-    
+    ///Function that saves any changes made into the current item.
     func saveInModel() {
         if let detail = detail {
             if let nameSave = nameField {
@@ -147,6 +148,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
         
     }
     
+    ///Geolocation function that uses CLGeocoder to perform forward geolocation.
     func forwardGeo() {
         let geo = CLGeocoder()
         let address = addressField.text ?? ""
