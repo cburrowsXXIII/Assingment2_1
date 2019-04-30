@@ -99,7 +99,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
     
     func textFieldShouldReturn(_ nameField: UITextField) -> Bool {
         nameField.resignFirstResponder()
-        forwardGeo()
+        if latField.text == ""{
+            forwardGeo()
+        } else {
+            addressField.text = detail?.address
+            saveInModel()
+        }
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         return true
     }

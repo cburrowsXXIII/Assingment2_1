@@ -72,14 +72,14 @@ class MasterViewController: UITableViewController {
         objects.removeLast()
         tableView.reloadData()
         navigationController?.popViewController(animated: true)
-        print("CancelNew")
+        //print("CancelNew")
     }
     ///Reloads the table if there is no new item.
     @objc
     func cancelPressed() {
         tableView.reloadData()
         navigationController?.popViewController(animated: true)
-        print("Cancel")
+        //print("Cancel")
     }
     
     // MARK: - Segues
@@ -146,7 +146,7 @@ class MasterViewController: UITableViewController {
         do {
             let json = try encoder.encode(objects)
             let fileURL = docs.appendingPathComponent("json")
-            print(fileURL)
+            //print(fileURL)
             try json.write(to: fileURL, options: .atomic)
         } catch {
             print("Error: \(error)")
@@ -160,9 +160,9 @@ class MasterViewController: UITableViewController {
             let fileURL = docs.appendingPathComponent("json")
             let data = try Data(contentsOf: fileURL)
             let places = try decoder.decode([Place].self, from: data)
-            print ("Got \(places.count)")
+            //print ("Got \(places.count)")
             objects = []
-            print("emptied")
+            //print("emptied")
             for place in places {
                 print (place.name)
                 objects.append(place)
