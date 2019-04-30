@@ -138,7 +138,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
                 }
             }
             if let longSave = longField?.text {
-                print("This :\(longSave)")
+                //print("This :\(longSave)")
                 if let numLong = Double(longSave) {
                     detail.longitude = numLong
                 }
@@ -166,7 +166,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
                 }
                 latitude = "\(location.coordinate.latitude)"
                 longitude = "\(location.coordinate.longitude)"
-                print(latitude, longitude)
+                //print(latitude, longitude)
                 self.latField.text = latitude
                 self.longField.text = longitude
                 self.saveInModel()
