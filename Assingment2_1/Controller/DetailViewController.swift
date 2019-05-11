@@ -8,8 +8,9 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
-class DetailViewController: UIViewController, UITextFieldDelegate{
+class DetailViewController: UITableViewController, UITextFieldDelegate{
     var copyOfOriginalItem: Place?
     var detail: Place?
     var new: Place?
@@ -17,7 +18,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate{
     var cancel = false
     
     
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var addressField: UITextField!
     @IBOutlet weak var latField: UITextField!
