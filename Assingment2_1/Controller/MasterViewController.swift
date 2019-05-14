@@ -117,6 +117,7 @@ class MasterViewController: UITableViewController {
         
         let object = objects[indexPath.row]
         cell.textLabel?.text = object.name
+        cell.detailTextLabel?.text = object.address
         return cell
     }
     

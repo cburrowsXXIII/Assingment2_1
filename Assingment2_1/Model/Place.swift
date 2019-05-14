@@ -8,8 +8,7 @@
 
 import Foundation
 
-///Class describes a place object as containing the following attributes:
-///name, address, latitude, longitude.
+///Class describes a place object as containing the following attributes:                              name, address, latitude, longitude.
 class Place: Codable {
     var name: String
     var address: String

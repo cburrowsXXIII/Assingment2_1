@@ -53,6 +53,7 @@
 		830574AA225C4694005E0DBF /* Assingment2_1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assingment2_1UITests.swift; sourceTree = "<group>"; };
 		830574AC225C4694005E0DBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		830574B8225C4BDF005E0DBF /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		838B7902228ABF9700571BF8 /* splash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = splash.jpg; sourceTree = "<group>"; };
 		83B68C382286D21B008FDC24 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		83B68C3A2286D225008FDC24 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -156,6 +157,7 @@
 		830574F8225C9AE1005E0DBF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				838B7902228ABF9700571BF8 /* splash.jpg */,
 				83057493225C4693005E0DBF /* LaunchScreen.storyboard */,
 				8305748E225C4692005E0DBF /* Main.storyboard */,
 			);

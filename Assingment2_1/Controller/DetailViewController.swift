@@ -25,7 +25,7 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
     @IBOutlet weak var mapView: MKMapView!
     
     
-    ///Function configures the view when called upon.
+    ///Function configures the detail view when called upon by populating the inputs and running mapView.
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = detail {
@@ -108,6 +108,10 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
     
     func textFieldShouldReturn(_ sender: UITextField) -> Bool {
         switch sender {
+        case nameField:
+            sender.resignFirstResponder()
+            saveInModel()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         case addressField:
             sender.resignFirstResponder()
             if latField.text == ""{
@@ -117,10 +121,22 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
                 saveInModel()
             }
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+        case latField:
+            sender.resignFirstResponder()
+            if longField.text != "" && addressField.text == ""{
+                reverseGeo()
+            } else {
+                addressField.text = detail?.address
+                saveInModel()
+            }
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         case longField:
             sender.resignFirstResponder()
-            if latField.text != ""{
+            if latField.text != "" && addressField.text == ""{
                 reverseGeo()
+            } else {
+                addressField.text = detail?.address
+                saveInModel()
             }
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         default:
@@ -200,10 +216,12 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
                 self.saveInModel()
                 self.mapLookUp(latitude: latLoc, longitude: longLoc)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "store"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
             }
         }
     }
     
+    ///Geolocation function that uses CLGeocoder to perform reverse geolocation.
     func reverseGeo(){
         let geo = CLGeocoder()
         var numLat = 0.0
@@ -229,11 +247,18 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
                     print("Got no name")
                     continue
                 }
-                print("Name: \(name)")
+                let add = "\(name), \(place.locality ?? ""), \(place.administrativeArea ?? "N/A"), \(place.country ?? "N/A"), \(place.postalCode ?? "N/A")"
+                self.addressField.text = add
+                self.mapLookUp(latitude: numLat, longitude: numLong)
+                self.saveInModel()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "store"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+                
             }
         }
     }
     
+    ///Performs all of the map functionality. Sets a region to display using coordinates in the parameters. Resets and adds a pin to that location. Latitude and Longitude are doubles.
     func mapLookUp(latitude: Double, longitude: Double){
         let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let region = MKCoordinateRegion(center: coordinates, latitudinalMeters: 10_000, longitudinalMeters: 10_000)
@@ -244,6 +269,8 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
             annotation.coordinate = coordinates
             annotation.title = self.addressField.text
             annotation.subtitle = "\(coordinates.latitude), \(coordinates.longitude)"
+            let allAnnotations = self.mapView.annotations
+            self.mapView.removeAnnotations(allAnnotations)
             self.mapView.addAnnotation(annotation)
         }
     }
