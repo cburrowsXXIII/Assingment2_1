@@ -200,6 +200,7 @@
                         <outlet property="addressField" destination="OmL-sv-s36" id="wKs-lO-imB"/>
                         <outlet property="latField" destination="7oL-Ed-Ka4" id="a6M-dt-Hhw"/>
                         <outlet property="longField" destination="HQb-9b-g9p" id="yed-39-cP2"/>
+                        <outlet property="mapView" destination="0if-w2-aiy" id="NTF-Gd-eYS"/>
                         <outlet property="nameField" destination="YGh-Oz-Ipt" id="R45-38-UyB"/>
                     </connections>
                 </tableViewController>

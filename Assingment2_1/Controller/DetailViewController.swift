@@ -22,12 +22,15 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
     @IBOutlet weak var addressField: UITextField!
     @IBOutlet weak var latField: UITextField!
     @IBOutlet weak var longField: UITextField!
+    @IBOutlet weak var mapView: MKMapView!
     
     
     ///Function configures the view when called upon.
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = detail {
+            var latBack:Double = 0.0
+            var longBack: Double = 0.0
             if let name = nameField {
                 if detail.name != "New Place"{
                     name.text = detail.name
@@ -40,6 +43,7 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
             }
             if let lat = latField {
                 if detail.latitude > -100.0{
+                    latBack = detail.latitude
                     lat.text = String(detail.latitude)
                 } else {
                     lat.text = ""
@@ -47,10 +51,15 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
             }
             if let long = longField {
                 if detail.longitude > 0.0{
+                    longBack = detail.longitude
                     long.text = String(detail.longitude)
+                    
                 } else {
                     long.text = ""
                 }
+            }
+            if latBack != 0.0 && longBack != 0.0 {
+                mapLookUp(latitude: latBack, longitude: longBack)
             }
             guard copyOfOriginalItem == nil else {
                 return
@@ -97,17 +106,29 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
         
     }
     
-    func textFieldShouldReturn(_ nameField: UITextField) -> Bool {
-        nameField.resignFirstResponder()
-        if latField.text == ""{
-            forwardGeo()
-        } else {
-            addressField.text = detail?.address
-            saveInModel()
+    func textFieldShouldReturn(_ sender: UITextField) -> Bool {
+        switch sender {
+        case addressField:
+            sender.resignFirstResponder()
+            if latField.text == ""{
+                forwardGeo()
+            } else {
+                addressField.text = detail?.address
+                saveInModel()
+            }
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+        case longField:
+            sender.resignFirstResponder()
+            if latField.text != ""{
+                reverseGeo()
+            }
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+        default:
+            break
         }
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         return true
     }
+    
     
     ///Action function that cancels an item editing.
     @IBAction func cancelButtonPressed(_ sender: Any) {
@@ -169,14 +190,61 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
                 guard let location = placeMark.location else {
                     continue
                 }
+                let latLoc = location.coordinate.latitude
+                let longLoc = location.coordinate.longitude
                 latitude = "\(location.coordinate.latitude)"
                 longitude = "\(location.coordinate.longitude)"
                 //print(latitude, longitude)
                 self.latField.text = latitude
                 self.longField.text = longitude
                 self.saveInModel()
+                self.mapLookUp(latitude: latLoc, longitude: longLoc)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "store"), object: nil)
             }
+        }
+    }
+    
+    func reverseGeo(){
+        let geo = CLGeocoder()
+        var numLat = 0.0
+        var numLong = 0.0
+        if let latSearch = latField?.text {
+            if let test = Double(latSearch){
+                numLat = test
+            }
+        }
+        if let longSearch = longField?.text {
+            if let test = Double(longSearch){
+                numLong = test
+            }
+        }
+        let location = CLLocation(latitude: numLat, longitude: numLong)
+        geo.reverseGeocodeLocation(location) {
+            guard let places = $0 else {
+                print("Got error \(String(describing: $1))")
+                return
+            }
+            for place in places {
+                guard let name = place.name else {
+                    print("Got no name")
+                    continue
+                }
+                print("Name: \(name)")
+            }
+        }
+    }
+    
+    func mapLookUp(latitude: Double, longitude: Double){
+        let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let region = MKCoordinateRegion(center: coordinates, latitudinalMeters: 10_000, longitudinalMeters: 10_000)
+        self.mapView.setRegion(region, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinates
+            annotation.title = self.addressField.text
+            annotation.subtitle = "\(coordinates.latitude), \(coordinates.longitude)"
+            self.mapView.addAnnotation(annotation)
         }
     }
     
