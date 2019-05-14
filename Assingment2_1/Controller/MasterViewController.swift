@@ -8,11 +8,12 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class MasterViewController: UITableViewController, myProto {
+    
 
 
     var detailViewController: DetailViewController?
-    ///Array of Place objects
+    ///Array of Place objects. Defined in Model/Place.swift
     var objects = [Place]()
     var start = true
     
@@ -21,7 +22,7 @@ class MasterViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
-        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cancelPressed), name: NSNotification.Name(rawValue: "cancel"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cancelNewPressed), name: NSNotification.Name(rawValue: "cancelNew"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(storage), name: NSNotification.Name(rawValue: "store"), object: nil)
@@ -95,6 +96,7 @@ class MasterViewController: UITableViewController {
             } else { return }
             let object = objects[indexPath.row]
             let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+            controller.delegate = self
             controller.detail = object
             controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
             controller.navigationItem.leftItemsSupplementBackButton = true

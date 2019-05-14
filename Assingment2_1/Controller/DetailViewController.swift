@@ -10,13 +10,18 @@ import UIKit
 import CoreLocation
 import MapKit
 
+protocol myProto {
+    func loadList()
+    func storage()
+}
+
 class DetailViewController: UITableViewController, UITextFieldDelegate{
     var copyOfOriginalItem: Place?
     var detail: Place?
     var new: Place?
     var newItem = false
     var cancel = false
-    
+    var delegate : myProto?
     
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var addressField: UITextField!
@@ -111,7 +116,8 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
         case nameField:
             sender.resignFirstResponder()
             saveInModel()
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+            delegate?.loadList()
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         case addressField:
             sender.resignFirstResponder()
             if latField.text == ""{
@@ -120,7 +126,8 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
                 addressField.text = detail?.address
                 saveInModel()
             }
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+            delegate?.loadList()
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         case latField:
             sender.resignFirstResponder()
             if longField.text != "" && addressField.text == ""{
@@ -129,7 +136,8 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
                 addressField.text = detail?.address
                 saveInModel()
             }
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+            delegate?.loadList()
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         case longField:
             sender.resignFirstResponder()
             if latField.text != "" && addressField.text == ""{
@@ -138,7 +146,8 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
                 addressField.text = detail?.address
                 saveInModel()
             }
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+            delegate?.loadList()
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         default:
             break
         }
@@ -215,8 +224,10 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
                 self.longField.text = longitude
                 self.saveInModel()
                 self.mapLookUp(latitude: latLoc, longitude: longLoc)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "store"), object: nil)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+                self.delegate?.storage()
+                self.delegate?.loadList()
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "store"), object: nil)
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
             }
         }
     }
@@ -251,9 +262,11 @@ class DetailViewController: UITableViewController, UITextFieldDelegate{
                 self.addressField.text = add
                 self.mapLookUp(latitude: numLat, longitude: numLong)
                 self.saveInModel()
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "store"), object: nil)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-                
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "store"), object: nil)
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+                self.delegate?.storage()
+                self.delegate?.loadList()
+
             }
         }
     }
